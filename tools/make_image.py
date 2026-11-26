@@ -4,12 +4,26 @@
 "Ivy World Frontpage" — koran v2 per
 ~/workspace/make-fun-agent/templates/news-image-newspaper.md and the
 top-10 study (~/workspace/make-fun-agent/top10-study-20261126.md):
-masthead brand, fields strip, 6-number stat strip, UTC timeline,
+masthead brand, fields strip, UTC timeline on a true 00-24 scale,
 3 large lead cards with drawn scenes, pinned world map (13 numbered
-pins), 10 more drawn scenes (13 total), 38 numbered stories in
-9 regions, each with a named source AND a claim-status label
-(CONFIRMED / REPORTED / OFFICIAL / CLAIMED), DATE CHECK footer
-stating exclusion of earlier-day events.
+pins = the 13 scene numbers), 13 drawn scenes in two rows (7+6),
+38 numbered stories in 9 regions, each with a named source, a place,
+a date and a claim-status label (CONFIRMED / REPORTED / OFFICIAL /
+CLAIMED), DATE CHECK footer stating exclusion of earlier-day events.
+
+v4 (27 Nov 2026): rebuilt from the mock-judge verdict on v3
+(~/workspace/make-fun-agent/mock-judge-verdict-v3.md):
+- stat strip deleted (it duplicated the masthead spec line);
+- scenes 10 -> 13 (added 32 Cartagena store, 10 Kuwait debris,
+  17 Kenya clinic); map pins = exactly the 13 scene numbers;
+- type hierarchy: lead headline 24pt, region bar 13pt, row headline
+  12pt, timeline caption 10pt;
+- small grey text darkened to #333; REPORTED pill darkened to #8a5a00;
+- timeline redrawn on a true 00-24 UTC scale with numbered captions,
+  the 00:23-01:39 cluster staggered above/below the line;
+- label logic (OFFICIAL = the named source is the body that issued
+  it) and per-row source lines "Source - Place - 26 Nov - FIELD" with
+  a stake flag (U+2691) and a legend in the CLAIM LABELS box.
 
 Deterministic: fixed strings, fixed fonts, no network, no timestamps,
 no randomness. Pillow only (installed locally, 10.2.0).
@@ -25,7 +39,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from stories import (  # noqa: E402
-    COLUMNS, EDITION_DATE, FIELDS, LEADS, PINS, SCENES, STATS, STORIES,
+    COLUMNS, EDITION_DATE, FIELDS, LEADS, PINS, SCENES, STORIES,
     TIMELINE,
 )
 
@@ -38,6 +52,7 @@ PAPER = (247, 243, 232)
 INK = (20, 20, 20)
 GREY = (90, 88, 80)
 DARKGREY = (40, 40, 40)
+DARKTEXT = (51, 51, 51)          # #333 — small text, contrast ~11.4:1
 ACCENT = (178, 58, 32)          # orange-red (Ivy brand accent)
 TEAL = (15, 59, 58)             # dark-green section bars
 NAVY = (20, 33, 61)
@@ -50,9 +65,10 @@ CARD_BG = (255, 255, 255)
 RULE = (180, 175, 160)
 
 # Claim-status colours (ClaimReview-style verdict labels).
+# REPORTED is #8a5a00: white on it is ~5.9:1 (v3 amber was ~3.5:1).
 STATUS_COLORS = {
     "CONFIRMED": (30, 110, 60),
-    "REPORTED": (176, 120, 20),
+    "REPORTED": (138, 90, 0),
     "OFFICIAL": (30, 60, 110),
     "CLAIMED": (178, 34, 34),
 }
@@ -96,14 +112,18 @@ def draw_lines(draw, lines, x, y, fnt, fill, leading):
     return y
 
 
+def chip_width(draw, status):
+    """Width of the status chip (7pt bold text + 4px padding each side)."""
+    return int(text_w(draw, status, F_BOLD(7))) + 8
+
+
 def draw_status_chip(draw, x_right, y, status):
     """Small filled chip with the claim-status word, right-aligned at x_right."""
     color = STATUS_COLORS[status]
     fnt = F_BOLD(7)
-    tw = text_w(draw, status, fnt)
-    w, h = int(tw) + 10, 11
+    w, h = chip_width(draw, status), 11
     draw.rectangle([x_right - w, y, x_right, y + h], fill=color)
-    draw.text((x_right - w + 5, y + 2), status, font=fnt,
+    draw.text((x_right - w + 4, y + 2), status, font=fnt,
               fill=(255, 255, 255))
     return w
 
@@ -325,66 +345,210 @@ def draw_scene(draw, key, box, accent):
         draw.rectangle([cx - 6, cy - 5, cx + 6, cy + 5], fill=white)
         draw.rectangle([x0 + 6, cy - 3, cx - 8, cy + 3], fill=GOLD)
         draw.rectangle([cx + 8, cy - 3, x1 - 6, cy + 3], fill=GOLD)
+    elif key == "store":
+        # supermarket storefront (Cartagena siege): striped awning,
+        # sign band, door + tall shop windows
+        n = 6
+        sw = (w - 12) // n
+        for i in range(n):
+            fill = white if i % 2 == 0 else GOLD
+            draw.rectangle([x0 + 6 + i * sw, y0 + 3,
+                            x0 + 6 + (i + 1) * sw, y0 + 11], fill=fill)
+        draw.rectangle([x0 + 6, y0 + 11, x1 - 6, y1 - 4], fill=white)
+        draw.rectangle([cx - 24, y0 + 13, cx + 24, y0 + 17], fill=GOLD)
+        draw.rectangle([x0 + 14, y0 + 20, x0 + 30, y1 - 4], fill=dark)
+        draw.rectangle([cx - 6, y0 + 20, cx + 12, y1 - 4], fill=dark)
+        draw.rectangle([cx + 18, y0 + 20, x1 - 14, y1 - 4], fill=dark)
+    elif key == "debris":
+        # intercepted drone: shrapnel burst + falling fragments
+        draw.polygon([(cx, y0 + 2), (cx + 4, y0 + 10), (cx + 12, y0 + 8),
+                      (cx + 7, y0 + 15), (cx + 12, y0 + 22), (cx + 4, y0 + 20),
+                      (cx, y0 + 28), (cx - 4, y0 + 20), (cx - 12, y0 + 22),
+                      (cx - 7, y0 + 15), (cx - 12, y0 + 8), (cx - 4, y0 + 10)],
+                     fill=GOLD)
+        for fx, fy in ((x0 + 16, cy + 4), (x1 - 18, cy + 8), (cx - 24, cy + 10),
+                       (cx + 22, cy + 2)):
+            draw.rectangle([fx - 2, fy - 2, fx + 2, fy + 2], fill=white)
+    elif key == "clinic":
+        # Ebola-site clinic: building + red-cross sign + door + windows
+        draw.rectangle([x0 + 12, y0 + 18, x1 - 12, y1 - 6], fill=white)
+        draw.rectangle([cx - 16, y0 + 4, cx + 16, y0 + 16], fill=RED)
+        draw.rectangle([cx - 2, y0 + 6, cx + 2, y0 + 14], fill=white)
+        draw.rectangle([cx - 6, y0 + 9, cx + 6, y0 + 11], fill=white)
+        draw.rectangle([cx - 4, y1 - 16, cx + 4, y1 - 6], fill=dark)
+        draw.rectangle([x0 + 18, y0 + 26, x0 + 28, y0 + 34], fill=dark)
+        draw.rectangle([x1 - 28, y0 + 26, x1 - 18, y0 + 34], fill=dark)
     draw.rectangle(box, outline=(0, 0, 0, 40))
 
 
 def draw_lead_card(draw, num, headline, deck, scene, accent, x, y, w, h):
-    """One large lead card: scene on top, serif headline, deck, source."""
+    """One large lead card: scene on top, 24pt serif headline, deck,
+    source line (number + source + place + date + field) + status word."""
     story = next(s for s in STORIES if s[0] == num)
-    _n, _r, _hl, _sm, source, status, _f = story
+    _n, _r, _hl, _sm, source, status, field, place, flagged = story
     draw.rectangle([x, y, x + w, y + h], fill=CARD_BG, outline=RULE)
-    draw_scene(draw, scene, (x + 1, y + 1, x + w - 1, y + 46), accent)
-    hy = y + 50
-    hl_lines = wrap(draw, headline, F_SERIF(12), w - 12)
+    draw_scene(draw, scene, (x + 1, y + 1, x + w - 1, y + 51), accent)
+    hl_lines = wrap(draw, headline, F_SERIF(24), w - 12)
     assert len(hl_lines) == 1, f"lead headline wraps: {headline!r}"
-    hy = draw_lines(draw, hl_lines[:1], x + 6, hy, F_SERIF(12), INK, 15)
+    draw_lines(draw, hl_lines[:1], x + 6, y + 54, F_SERIF(24), INK, 28)
     deck_lines = wrap(draw, deck, F_REG(9), w - 12)
-    assert len(deck_lines) <= 2, f"lead deck too long: {deck!r}"
-    hy = draw_lines(draw, deck_lines[:2], x + 6, hy + 1, F_REG(9),
-                    DARKGREY, 11)
-    # source + coloured status word
-    sy = y + h - 13
-    draw.text((x + 6, sy), f"{num:02d}  {source}  -  ", font=F_REG(8),
-              fill=GREY)
-    off = text_w(draw, f"{num:02d}  {source}  -  ", F_REG(8))
+    assert len(deck_lines) == 1, f"lead deck wraps: {deck!r}"
+    draw_lines(draw, deck_lines[:1], x + 6, y + 84, F_REG(9), DARKGREY, 11)
+    # source + coloured status word, bottom-anchored
+    flag = "\u2691 " if flagged else ""
+    src = (f"{num:02d}  {flag}{source} \u00b7 {place} \u00b7 26 Nov "
+           f"\u00b7 {field.upper()}  ")
+    sy = y + 99
+    draw.text((x + 6, sy), src, font=F_REG(8), fill=DARKTEXT)
+    off = text_w(draw, src, F_REG(8))
+    total = off + text_w(draw, status, F_BOLD(8))
+    assert total <= w - 12, f"lead source too long: {src!r}{status}"
     draw.text((x + 6 + off, sy), status, font=F_BOLD(8),
               fill=STATUS_COLORS[status])
+
+
+def draw_scenes(img, draw, y):
+    """13 scene tiles in two rows (7+6), 135x60, number badge top-left.
+
+    The scene art is drawn into a 90x40 temp and upscaled uniformly
+    (1.5x) so the figures fill the tile instead of sitting small in
+    the middle of a wide box. The second row is centred.
+    """
+    gap = 8
+    tile_w = (W - 2 * MARGIN - gap * 6) // 7
+    tile_h = 60
+    row_gap = 6
+    rows = [SCENES[:7], SCENES[7:]]
+    for ri, row in enumerate(rows):
+        row_w = len(row) * tile_w + (len(row) - 1) * gap
+        x0 = MARGIN + (W - 2 * MARGIN - row_w) // 2
+        ty = y + ri * (tile_h + row_gap)
+        for ci, (num, scene, accent) in enumerate(row):
+            tx = x0 + ci * (tile_w + gap)
+            tmp = Image.new("RGB", (90, 40), accent)
+            td = ImageDraw.Draw(tmp)
+            draw_scene(td, scene, (0, 0, 90, 40), accent)
+            art = tmp.resize((tile_w, tile_h), Image.LANCZOS)
+            img.paste(art, (tx, ty))
+            draw.rectangle([tx, ty, tx + tile_w, ty + tile_h], outline=RULE)
+            # number badge, top-left
+            badge = f"{num:02d}"
+            bw = 26
+            draw.rectangle([tx, ty, tx + bw, ty + 15], fill=INK)
+            draw.text((tx + 4, ty + 2), badge, font=F_BOLD(10),
+                      fill=(255, 255, 255))
+
+
+def draw_timeline(draw, y):
+    """UTC timeline on a true 00-24 scale. y = top of the band (56px).
+
+    Captions are 10pt bold, prefixed with the story number, and
+    staggered: the 00:23-01:39 cluster is split above/below the line.
+    Ticks at 00 / 06 / 12 / 18 / 24.
+    """
+    def tx(minutes):
+        return MARGIN + minutes / 1440.0 * (W - 2 * MARGIN)
+
+    def mins(t):
+        h, m = t.split(":")
+        return int(h) * 60 + int(m)
+
+    axis_y = y + 27
+    # label, top-right
+    lab = "THE DAY IN UTC"
+    draw.text((W - MARGIN - text_w(draw, lab, F_BOLD(9)), y), lab,
+              font=F_BOLD(9), fill=TEAL)
+    # axis line
+    draw.line([MARGIN, axis_y, W - MARGIN, axis_y], fill=RULE, width=2)
+    # ticks at 00/06/12/18/24 with labels below the axis
+    for h in (0, 6, 12, 18, 24):
+        x = tx(h * 60)
+        draw.line([x, axis_y - 3, x, axis_y + 3], fill=INK, width=2)
+        tlab = f"{h:02d}"
+        tw = text_w(draw, tlab, F_REG(8))
+        if h == 0:
+            lx = x
+        elif h == 24:
+            lx = x - tw
+        else:
+            lx = x - tw / 2
+        draw.text((lx, y + 46), tlab, font=F_REG(8), fill=DARKTEXT)
+    # captions, staggered so same-row captions never overlap.
+    # above row 1: 00:23, 05:44, 12:28, 18:07; above row 2: 01:39;
+    # below: 00:54, 10:25, 14:02.
+    row_of = {6: 0, 2: 0, 8: 0, 16: 0, 5: 1, 15: 2, 19: 2, 4: 2}
+    row_y = {0: y, 1: y + 11, 2: y + 33}
+    placed = {0: [], 1: [], 2: []}
+    for t, label, num in TIMELINE:
+        cap = f"{num:02d} {label}"
+        cw = text_w(draw, cap, F_BOLD(10))
+        x = tx(mins(t))
+        row = row_of[num]
+        for s, e in placed[row]:
+            assert x + cw + 6 <= s or x >= e + 6, \
+                f"timeline captions overlap: {cap!r}"
+        placed[row].append((x, x + cw))
+        draw.text((x, row_y[row]), cap, font=F_BOLD(10), fill=DARKTEXT)
+        draw.ellipse([x - 4, axis_y - 4, x + 4, axis_y + 4], fill=ACCENT,
+                     outline=(255, 255, 255), width=1)
+
+
+def fit_one_line(draw, text, fnt, width):
+    """Truncate text with '...' until it fits one line of width.
+
+    Drops whole words from the end, so the result never ends
+    mid-word ("bud..."); the ellipsis follows a complete word.
+    """
+    if len(wrap(draw, text, fnt, width)) <= 1:
+        return text
+    words = text.split()
+    while len(words) > 4:
+        words = words[:-1]
+        cand = " ".join(words) + "..."
+        if len(wrap(draw, cand, fnt, width)) <= 1:
+            return cand
+    # last resort: hard cut (should not happen for these summaries)
+    return text[:40].rstrip() + "..."
 
 
 def draw_column(draw, regions, x, y, col_w, grid_bottom):
     """Draw region sections + stories in one column; returns bottom y.
 
-    Per story: number + 1-line headline (asserted) with a status chip at
-    the right end of the headline line, then up to 2 lines of
-    summary + source (summary truncated with an ellipsis if it would
-    spill to a third line, keeping the source intact).
+    Per story (31px): 12pt headline (asserted 1 line) with the status
+    chip at the right end of the headline line, then 1 line of summary
+    (truncated with '...' if needed), then the source line
+    "Source - Place - 26 Nov - FIELD" with a stake flag (U+2691).
     """
     by_region = {}
     for s in STORIES:
         by_region.setdefault(s[1], []).append(s)
     for region in regions:
         stories = by_region[region]
-        draw.rectangle([x, y, x + col_w, y + 17], fill=TEAL)
+        draw.rectangle([x, y, x + col_w, y + 20], fill=TEAL)
         label = f"{region}  -  {len(stories)}"
-        draw.text((x + 6, y + 3), label, font=F_BOLD(10), fill=(255, 255, 255))
-        y += 21
-        for num, _r, headline, summary, source, status, _field in stories:
-            hl_lines = wrap(draw, headline, F_BOLD(10), col_w - 22)
+        draw.text((x + 6, y + 3), label, font=F_BOLD(13),
+                  fill=(255, 255, 255))
+        y += 22
+        for num, _r, headline, summary, source, status, field, place, flagged in stories:
+            cw = chip_width(draw, status)
+            hl_lines = wrap(draw, headline, F_BOLD(12), col_w - 22 - cw)
             assert len(hl_lines) == 1, f"headline wraps: {headline!r}"
-            draw.text((x, y), f"{num:02d}", font=F_BOLD(10), fill=ACCENT)
+            draw.text((x, y), f"{num:02d}", font=F_BOLD(12), fill=ACCENT)
             tx = x + 22
-            draw.text((tx, y), headline, font=F_BOLD(10), fill=INK)
+            draw.text((tx, y), headline, font=F_BOLD(12), fill=INK)
             draw_status_chip(draw, x + col_w, y, status)
-            y += 11
-            text = summary + " - " + source
-            lines = wrap(draw, text, F_REG(8), col_w - 22)
-            while len(lines) > 2 and len(summary) > 40:
-                summary = summary[:-4].rstrip().rstrip(".")
-                text = summary + "... - " + source
-                lines = wrap(draw, text, F_REG(8), col_w - 22)
-            assert len(lines) <= 2, f"summary too long: {text!r}"
-            y = draw_lines(draw, lines[:2], tx, y, F_REG(8), DARKGREY, 9)
-            y += 2
+            y += 12
+            text = fit_one_line(draw, summary, F_REG(8), col_w - 22)
+            draw.text((tx, y), text, font=F_REG(8), fill=DARKGREY)
+            y += 9
+            flag = "\u2691 " if flagged else ""
+            src = (f"{flag}{source} \u00b7 {place} \u00b7 26 Nov "
+                   f"\u00b7 {field.upper()}")
+            assert text_w(draw, src, F_REG(8)) <= col_w - 22, \
+                f"source too long: {src!r}"
+            draw.text((tx, y), src, font=F_REG(8), fill=DARKTEXT)
+            y += 9
+            y += 1  # gap between rows
     return y
 
 
@@ -394,81 +558,43 @@ def build(output_path):
 
     # ---- Masthead ----
     title = "IVY WORLD FRONTPAGE"
-    f_title = F_SERIF(34)
+    f_title = F_SERIF(30)
     tw = text_w(d, title, f_title)
     d.text(((W - tw) / 2, 6), title, font=f_title, fill=INK)
-    d.line([MARGIN, 50, W - MARGIN, 50], fill=INK, width=2)
+    d.line([MARGIN, 42, W - MARGIN, 42], fill=INK, width=2)
     spec = (f"{EDITION_DATE}  -  38 STORIES  -  9 REGIONS  -  "
             f"{len(FIELDS)} FIELDS  -  UTC TIMELINE")
     f_spec = F_BOLD(11)
     tw = text_w(d, spec, f_spec)
-    d.text(((W - tw) / 2, 56), spec, font=f_spec, fill=ACCENT)
+    d.text(((W - tw) / 2, 46), spec, font=f_spec, fill=ACCENT)
 
     # ---- Fields strip ----
     fields_text = "FIELDS:  " + "  \u00b7  ".join(FIELDS)
     assert text_w(d, fields_text, F_REG(8)) <= W - 2 * MARGIN, "fields strip too wide"
-    d.text((MARGIN, 76), fields_text, font=F_REG(8), fill=GREY)
-
-    # ---- Stat strip (6 boxes) ----
-    sy, sh = 94, 38
-    sw = (W - 2 * MARGIN - 5 * 8) // 6
-    for i, (num, label) in enumerate(STATS):
-        x0 = MARGIN + i * (sw + 8)
-        d.rectangle([x0, sy, x0 + sw, sy + sh], fill=CARD_BG, outline=RULE)
-        d.text((x0 + 8, sy + 2), num, font=F_BOLD(18), fill=ACCENT)
-        lines = wrap(d, label, F_REG(8), sw - 16)
-        draw_lines(d, lines[:2], x0 + 8, sy + 22, F_REG(8), GREY, 10)
-
-    # ---- UTC timeline ----
-    # Label on the left; slots start after it so no time collides with it.
-    ty = 140
-    d.text((MARGIN, ty), "THE DAY IN UTC  -", font=F_BOLD(9), fill=TEAL)
-    line_y = ty + 20
-    d.line([MARGIN, line_y, W - MARGIN, line_y], fill=RULE, width=2)
-    slots_x0 = MARGIN + 150
-    slot_w = (W - MARGIN - slots_x0) // len(TIMELINE)
-    for i, (t, label, _num) in enumerate(TIMELINE):
-        cx = slots_x0 + slot_w * i + slot_w // 2
-        d.text((cx - text_w(d, t, F_BOLD(9)) / 2, ty + 2), t,
-               font=F_BOLD(9), fill=INK)
-        d.ellipse([cx - 4, line_y - 4, cx + 4, line_y + 4], fill=ACCENT,
-                  outline=(255, 255, 255), width=1)
-        ll = wrap(d, label, F_REG(8), slot_w - 8)
-        assert len(ll) == 1, f"timeline label wraps: {label!r}"
-        draw_lines(d, ll, cx - text_w(d, ll[0], F_REG(8)) / 2,
-                   line_y + 7, F_REG(8), GREY, 10)
+    d.text((MARGIN, 62), fields_text, font=F_REG(8), fill=DARKTEXT)
 
     # ---- 3 large lead cards ----
-    ly, lh = 186, 104
+    ly, lh = 80, 112
     lw = (W - 2 * MARGIN - 2 * 8) // 3
     for i, (num, headline, deck, scene, accent) in enumerate(LEADS):
         draw_lead_card(d, num, headline, deck, scene, accent,
                        MARGIN + i * (lw + 8), ly, lw, lh)
 
+    # ---- Drawn scenes strip (13, two rows 7+6) ----
+    draw_scenes(img, d, 198)
+
     # ---- Pinned world map ----
-    my = 296
-    d.text((MARGIN, my),
+    d.text((MARGIN, 330),
            "WHERE IT HAPPENED  -  13 NUMBERED PINS = STORY NUMBERS  -  "
            "13 DRAWN SCENES BELOW",
            font=F_BOLD(9), fill=TEAL)
-    draw_map(d, (MARGIN, my + 15, W - MARGIN, my + 15 + 94))
+    draw_map(d, (MARGIN, 344, W - MARGIN, 344 + 68))
 
-    # ---- Drawn scenes strip (10) ----
-    sy2 = 414
-    gap = 8
-    cw = (W - 2 * MARGIN - gap * (len(SCENES) - 1)) // len(SCENES)
-    for i, (num, caption, scene, accent) in enumerate(SCENES):
-        x0 = MARGIN + i * (cw + gap)
-        x1 = x0 + cw
-        d.rectangle([x0, sy2, x1, sy2 + 48], fill=CARD_BG, outline=RULE)
-        draw_scene(d, scene, (x0 + 1, sy2 + 1, x1 - 1, sy2 + 30), accent)
-        cap = f"{num:02d}  {caption}"
-        cap_lines = wrap(d, cap, F_REG(8), cw - 6)
-        assert len(cap_lines) == 1, f"scene caption wraps: {cap!r}"
-        draw_lines(d, cap_lines, x0 + 3, sy2 + 33, F_REG(8), INK, 10)
+    # ---- UTC timeline (true 00-24 scale) ----
+    draw_timeline(d, 418)
 
     # ---- Story grid ----
-    grid_top = 468
+    grid_top = 480
     grid_bottom = 968
     col_w = (W - 2 * MARGIN - 2 * 8) // 3
     col_x = [MARGIN, MARGIN + col_w + 8, MARGIN + 2 * (col_w + 8)]
@@ -479,27 +605,21 @@ def build(output_path):
     max_bottom = max(bottoms)
     assert max_bottom <= grid_bottom, f"grid overflow: {max_bottom}"
 
-    # Fill short columns with genuine reading keys (not filler): the map
-    # key goes in the second column, the claim-label key in the third.
-    # Only drawn when the space is really there.
-    keys = {
-        1: ("MAP KEY",
-            "Red pins are story numbers on the map above. Scenes are drawn "
-            "illustrations, not photographs. All times are UTC."),
-        2: ("CLAIM LABELS",
-            "CONFIRMED: stated as fact. OFFICIAL: announced by a body. "
-            "REPORTED: as reported, unconfirmed. CLAIMED: one side's claim."),
-    }
-    for i, b in enumerate(bottoms):
-        if i in keys and grid_bottom - b >= 50:
-            title, note = keys[i]
-            d.rectangle([col_x[i], b + 6, col_x[i] + col_w, b + 50],
-                        outline=RULE)
-            d.text((col_x[i] + 6, b + 10), title, font=F_BOLD(9),
-                   fill=TEAL)
-            lines = wrap(d, note, F_REG(8), col_w - 12)
-            draw_lines(d, lines[:2], col_x[i] + 6, b + 22, F_REG(8),
-                       GREY, 11)
+    # Claim-labels key in the third column (holds the stake-flag legend).
+    b = bottoms[2]
+    if grid_bottom - b >= 40:
+        title, note = ("CLAIM LABELS",
+            "CONFIRMED: fact. OFFICIAL: body announced it. REPORTED: "
+            "relayed, unconfirmed. CLAIMED: one side's claim. "
+            "\u2691: source has a stake.")
+        lines = wrap(d, note, F_REG(8), col_w - 12)
+        assert len(lines) <= 2, f"claim-labels note too long: {note!r}"
+        box_h = 16 + len(lines) * 11 + 6
+        assert b + 4 + box_h <= grid_bottom, "claim-labels box overflows"
+        d.rectangle([col_x[2], b + 4, col_x[2] + col_w, b + 4 + box_h],
+                    outline=RULE)
+        d.text((col_x[2] + 6, b + 8), title, font=F_BOLD(9), fill=TEAL)
+        draw_lines(d, lines, col_x[2] + 6, b + 20, F_REG(8), DARKTEXT, 11)
 
     # ---- Footer: DATE CHECK (states EXCLUSION, never an admission) ----
     d.line([MARGIN, 972, W - MARGIN, 972], fill=INK, width=2)
@@ -512,8 +632,8 @@ def build(output_path):
     y = draw_lines(d, fl, MARGIN, 978, F_REG(9), INK, 12)
     d.text((MARGIN, y + 2),
            "IVY WORLD FRONTPAGE  -  26 NOV 2026  -  38 STORIES  -  9 REGIONS  -  "
-           "19 FIELDS  -  UTC TIMELINE  -  13 SCENES  -  13 MAP PINS",
-           font=F_BOLD(9), fill=GREY)
+           "19 FIELDS  -  UTC TIMELINE  -  13 SCENES  -  3 LEAD CARDS  -  13 MAP PINS",
+           font=F_BOLD(9), fill=DARKTEXT)
 
     img.save(output_path, "PNG", optimize=True)
 
@@ -525,20 +645,23 @@ def build(output_path):
     assert sum(len([s for s in STORIES if s[1] == r]) for r in regions) == 38
     assert len(fields) == len(FIELDS) == 19, fields
     assert fields == sorted(FIELDS), "FIELDS list mismatch"
-    assert len(STATS) == 6
     assert len(LEADS) == 3
-    assert len(SCENES) == 10 and len(LEADS) + len(SCENES) == 13
+    assert len(SCENES) == 13
     assert len(PINS) == 13
+    assert {p[0] for p in PINS} == {s[0] for s in SCENES}, "pins != scenes"
     assert len(TIMELINE) == 8
     assert all(s[5] in STATUS_COLORS for s in STORIES), "bad status"
     size = os.path.getsize(output_path)
     assert size <= 1024 * 1024, f"over 1 MiB: {size}"
+    counts = {st: len([s for s in STORIES if s[5] == st])
+              for st in STATUS_COLORS}
     print(f"OK {output_path}: {size} bytes, 1024x1024")
     print(f"stories={len(STORIES)} regions={len(regions)} "
           f"({', '.join(f'{r}:{len([s for s in STORIES if s[1]==r])}' for r in regions)})")
-    print(f"fields={len(fields)} stats={len(STATS)} leads={len(LEADS)} "
-          f"scenes={len(SCENES) + len(LEADS)} pins={len(PINS)} "
+    print(f"fields={len(fields)} leads={len(LEADS)} "
+          f"scenes={len(SCENES)} pins={len(PINS)} "
           f"timeline={len(TIMELINE)} grid_bottom_max={max_bottom}")
+    print(f"status: {counts}  flagged={len([s for s in STORIES if s[8]])}")
 
 
 if __name__ == "__main__":

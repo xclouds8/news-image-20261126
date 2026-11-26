@@ -10,53 +10,52 @@ world news in one image". [See the bounty page](https://make.fun/bounty/news-ima
 - Account: [@xcloudss](https://make.fun/u/xcloudss)
 - Reward: $100 USDC total, 50 paid places, $20 for 1st place
 - Entries close: 28 Nov 2026, 07:00 WIB (2026-11-28T00:00:00Z)
-- Entry image: `world-news-26-nov-2026.png` (1024×1024 PNG, 211,220 bytes)
+- Entry image: `world-news-26-nov-2026.png` (1024×1024 PNG, 273,653 bytes)
 - Entrypoint: `main.py` — run `python3 main.py` (standard library only);
   it copies the image to `/output/entry.png` (falls back to `./output/`).
 
 ## The front page
 
 One newspaper front page, **38 numbered stories in 9 regions and 19 fields**,
-every story with a named source **and** a claim status (CONFIRMED / REPORTED /
-OFFICIAL / CLAIMED), a UTC timeline, a 6-number stat strip, 13 drawn scenes,
-3 large lead cards, a pinned world map with 13 numbered pins, and a DATE CHECK
+every story with a named source, a place, a date **and** a claim status (CONFIRMED / REPORTED /
+OFFICIAL / CLAIMED), a UTC timeline on a true 00–24 scale, 13 drawn scenes in two rows (7+6),
+3 large lead cards, a pinned world map whose 13 numbered pins are exactly the 13 scene numbers, and a DATE CHECK
 footer that states the exclusion of earlier-day events.
 
 **Lead:** the US proposes tariffs on 14 trading partners (China capped at 20%).
 
 **Europe & Ukraine (7):** De Cos picked to run the ECB; EU split over the
-Ukraine loan and budget; NATO watches Poland from the air; Russian strikes
-kill 3 in Ukraine; Ukraine claims 5 jets hit in Russia; Spain to vote early
-on 29 Nov; UK–EU treaty texts due out.
+Ukraine loan; NATO watches Poland by air; Russian strikes kill 3 in Ukraine;
+Ukraine claims 5 jets hit; Spain to vote early on 29 Nov; UK–EU treaty
+texts due out.
 
-**Middle East & Gulf (7):** Israel threatens to move 1M in Gaza; 8 killed in
-overnight Gaza strikes; 2 killed by drone shrapnel in Kuwait; UK sanctions
-the Houthis over Saudi hits; blast hits Sanaa as missiles fly; ISIL attack
-kills 2 in Hasakah; Iraq jails 8 French IS members for life.
+**Middle East & Gulf (7):** Israel threatens 1M in Gaza; 8 killed in Gaza
+strikes; 2 killed by drone shrapnel in Kuwait; UK sanctions the Houthis;
+blast hits Sanaa; ISIL attack kills 2 in Hasakah; Iraq jails 8 French IS
+members.
 
 **Africa (4):** 31 killed as a tanker burns in Cairo; Guinea-Bissau vote
-delayed to 2028; Kenya court faults the US Ebola site; Zambia bans a protest
-over term limits.
+delayed; Kenya court faults the US Ebola site; Zambia bans a term-limit
+protest.
 
-**South Asia (3):** Myanmar rejects parts of the ICJ ruling; Taliban erase
-women's names in Balkh; India women hockey up to world No. 4.
+**South Asia (2):** Taliban erase women's names in Balkh; India women
+hockey No. 4.
 
-**East & Southeast Asia (3):** Kim: widen tactical nuclear deployment;
-Bangkok oil depot blast injures 7; Bogor mine search resumes, 13 dead.
+**East & Southeast Asia (5):** Myanmar rejects the ICJ ruling; Kim: widen
+nuclear deployment; Bangkok depot blast injures 7; Bogor mine search
+resumes; Australia hit Canada 14–1 in Ipoh, Malaysia.
 
-**Oceania (2):** ex-PM attacks the Solomons–Australia pact; Australia hit
-Canada 14–1 in Ipoh.
+**Oceania (1):** ex-PM attacks the Solomons pact.
 
-**North America (5):** US tariffs hit 14 partners; Macy's parade pushed to
-Saturday; storm knocks out power for 600,000; Puerto Rico court axes the
-Luma contract; US inflation runs at 3.8%.
+**North America (5):** US tariffs hit 14 partners; parade pushed to
+Saturday; storm cuts power for 600,000; court axes the Luma contract; US
+inflation runs at 3.8%.
 
 **South America (3):** 76 hostages freed in Cartagena; Brazil, China denounce
-US tariffs; Brazil probes a singer in a tin scheme.
+tariffs; Brazil probes a singer.
 
-**World & Markets (4):** SpaceX cleared for 1M satellites; EU to triple
-data-centre capacity; November runs 2.0° above normal; Depardieu to face
-trial over 2018 rape.
+**World (4):** SpaceX cleared for 1M satellites; EU to triple data capacity;
+November 2.0° above normal; Depardieu to face trial.
 
 ## How the image was made
 
@@ -83,8 +82,9 @@ news cycle carries three items whose underlying act was dated late Wed
 they are printed as 26 Nov reports, as a Thursday newspaper prints them,
 and are flagged in `SOURCES.md`. Casualty figures are those reported that
 day, and later reporting may revise them. Map pins for the crowded
-Gaza/Cairo and Washington/New York clusters are nudged a few degrees so the
-numbered dots do not overlap; the story numbers are unchanged.
+Cairo/Kyiv, New Jersey/New York/Cartagena and Nairobi clusters are nudged a
+few degrees so the numbered dots do not overlap; the story numbers are
+unchanged.
 
 ## Licence
 

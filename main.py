@@ -3,11 +3,20 @@
 
 Ivy World Frontpage — Thursday 26 November 2026: a newspaper front
 page summing up the day in 38 numbered, source-attributed stories
-across 9 regions and 19 fields, with a UTC timeline, 13 drawn scenes,
-3 large lead cards and a pinned world map. Every story carries a named
-source and a claim status (CONFIRMED / REPORTED / OFFICIAL / CLAIMED);
-the DATE CHECK footer states that no story dated 25 Nov or earlier
-appears on the page.
+across 9 regions and 19 fields, with a UTC timeline on a true 00-24
+scale, 13 drawn scenes in two rows (7+6), 3 large lead cards and a
+pinned world map whose 13 numbered pins are exactly the 13 scene
+numbers. Every story carries a named source, a place, a date and a
+claim status (CONFIRMED / REPORTED / OFFICIAL / CLAIMED), shown as
+"Source · Place · 26 Nov · FIELD" with a stake flag where the source
+has a stake in the claim; the DATE CHECK footer states that no story
+dated 25 Nov or earlier appears on the page.
+
+v4 (27 Nov 2026): rebuilt from the mock-judge verdict on v3 — the
+stat strip is gone, the scenes are 13 (not 10), the lead headlines
+are 24pt, the region bars 13pt, the row headlines 12pt, the timeline
+captions 10pt, small text is #333, the REPORTED pill is #8a5a00, and
+the labels follow OFFICIAL = the named source issued it.
 
 Lead: the US proposes tariffs on 14 trading partners (China capped at
 20%). Also: Israel threatens to displace one million Palestinians in
@@ -33,8 +42,8 @@ import sys
 
 IMAGE = "world-news-26-nov-2026.png"
 # Verified 27 Nov 2026: generator run twice writes identical bytes.
-IMAGE_SHA256 = "ba0c0f1b862567a68f6f7bbedf96ab89eb4463af8e18f2dc0f6fbdd7bd637370"
-IMAGE_SIZE = 211220
+IMAGE_SHA256 = "9b2e5f6a661cf94a938a056ea3b11e0549fd7e3ea342045b0a54b054f0e517ea"
+IMAGE_SIZE = 273653
 TITLE = "Ivy World Frontpage — 26 November 2026"
 BOUNTY = "news-image-20261126"
 

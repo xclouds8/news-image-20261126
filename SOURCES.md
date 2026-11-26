@@ -16,9 +16,10 @@ First-reported UTC times below come from Daily Summary of World
 26 Nov 20:53 UTC), which links every story to its original publisher.
 
 **Claim status (ClaimReview-style).** CONFIRMED = the named source states
-it as established fact. OFFICIAL = a government / court / institution
-announced it. REPORTED = reported by the named outlet, not independently
-confirmed. CLAIMED = one party's claim, hedged as a claim. No claim is
+it as established fact. OFFICIAL = the named source IS the body that
+issued/announced it (a government, court or institution). REPORTED =
+relayed by a third party (the named outlet), not independently confirmed.
+CLAIMED = one party's claim, hedged as a claim. No claim is
 stated as flat fact without a status.
 
 ## Per-story evidence
@@ -33,7 +34,7 @@ stated as flat fact without a status.
 | 6 | Spain snap vote 29 Nov | Spanish PM's office | Daily Summary, 00:23 UTC: Sánchez called snap elections for Sun 29 Nov, 8 months early, over rejected housing law; PP narrowly ahead in polls. |
 | 7 | UK–EU treaty texts due out | UK government | Daily Summary, 07:40 UTC: food + emissions treaty texts with 10-year termination clause; Badenoch called deal terrible. |
 | 8 | Israel threatens to move 1M in Gaza | Israel defence ministry | Daily Summary, 12:28 UTC; Inshorts 26 Nov: Katz threatened forcible displacement of 1M Palestinians unless Hamas disarms; overnight strikes killed 8. |
-| 9 | 8 killed in overnight Gaza strikes | Gaza officials | Daily Summary (in #8 item): overnight strikes killed 8, incl. Hamas official Khaled Abu Nada; third straight night despite ceasefire. |
+| 9 | 8 killed in overnight Gaza strikes | Gaza Health Ministry | Daily Summary (in #8 item): overnight strikes killed 8, incl. Hamas official Khaled Abu Nada; third straight night despite ceasefire. Toll attributed to the Gaza Health Ministry, the casualty-reporting authority. |
 | 10 | 2 killed by drone shrapnel in Kuwait | Kuwait ministry | Daily Summary, 13:19 UTC: 4 hurt incl. 2 Italian Rheinmetall technicians, who later died; Italy confirmed; Iran denied operations. |
 | 11 | UK sanctions Houthis | UK government | Daily Summary, 02:04 UTC: Houthis claimed Jeddah + Jazan port attacks; UK froze assets, travel bans on group + 4 leaders. |
 | 12 | Blast hits Sanaa | Saudi coalition | Daily Summary, 00:00 UTC: blast in Sanaa after strikes near airport; coalition intercepted missiles over Riyadh + 2 drones in Eastern Region. CLAIMED. |
@@ -41,7 +42,7 @@ stated as flat fact without a status.
 | 14 | Iraq jails 8 French IS members | Iraqi court | Daily Summary, 06:28 UTC: 8 French nationals life, 2 more 15 years; among 47 transferred from Syria; most pleaded guilty. |
 | 15 | 31 killed, Cairo tanker fire | Egypt Health Ministry | Daily Summary, 00:54 UTC; Dumpling News 26 Nov: tanker overturned on Giza Ring Road, ≥31 dead, 21 injured, 27 vehicles charred; driver arrested. |
 | 16 | Guinea-Bissau vote delayed to 2028 | Transitional presidency | Daily Summary, 18:07 UTC: decree by Transitional President Horta Inta-a; elections moved from 6 Dec to 26 Nov 2028, on coup's first anniversary. |
-| 17 | Kenya court faults US Ebola site | Reuters | Reuters, Nairobi 26 Nov: High Court (Judge Patricia Nyaundi) ruled construction of US-backed Ebola facility breached constitution; works halted until US deal disclosed (45 days). |
+| 17 | Kenya court faults US Ebola site | Kenya High Court | High Court, Nairobi 26 Nov (Judge Patricia Nyaundi): construction of the US-backed Ebola facility breached the constitution; works halted until the US deal is disclosed (45 days). First reported by Reuters. |
 | 18 | Zambia bans term-limit protest | Zambian police | Daily Summary, 00:22 UTC: protest scheduled 25 Nov banned, citing clash risk; UPND-aligned groups petitioned to remove term limits. |
 | 19 | Myanmar rejects parts of ICJ ruling | Myanmar junta | Daily Summary, 10:25 UTC: Min Aung Hlaing will not comply with parts of ICJ genocide ruling he deems inappropriate; court ordered reparations. |
 | 20 | Taliban erase women's names, Balkh | Afghan officials | Inshorts 26 Nov: Taliban in Balkh directed officials/health workers to replace women's real names with 'Bibi' in official + medical records. REPORTED. |
@@ -61,10 +62,10 @@ stated as flat fact without a status.
 | 34 | Brazil probes singer in tin scheme | Brazilian police | Dumpling News 26 Nov: Brazil investigates singer in illegal cassiterite export scheme amid tin price surge. |
 | 35 | SpaceX cleared for 1M satellites | FCC | FCC approval (announced 25 Nov, reported 26 Nov): conditional authorisation for up to 1M Starmind orbital data-centre satellites, first of its kind; Dumpling News 26 Nov 23:15 KST; 10 Things 26 Nov. |
 | 36 | EU to triple data-centre capacity | European Commission | Dumpling News 26 Nov 03:02 KST: Commission wants to triple EU data-centre capacity for AI/cloud within five years; regulatory gaps noted. |
-| 37 | November runs 2.0° above normal | Copernicus | Climate and Economy roundup 26 Nov (Copernicus/ECMWF ERA5): through 23 Nov, November >2.0°C above 1850–1900 baseline (previous record monthly anomaly 1.78°C, Feb 2024); oceans warmest on record for the time of year. |
+| 37 | November 2.0° above normal | Copernicus | Climate and Economy roundup 26 Nov (Copernicus/ECMWF ERA5): through 23 Nov, November >2.0°C above 1850–1900 baseline (previous record monthly anomaly 1.78°C, Feb 2024); oceans warmest on record for the time of year. |
 | 38 | Depardieu to face trial | Paris appeals court | Daily Summary, 13:46 UTC: Paris appeals court ordered Gérard Depardieu to stand trial for alleged rape of Charlotte Arnould (7 Aug 2018); second allegation dismissed; denies wrongdoing; faces 15–20 years if convicted. |
 
-## Numbers in the stat strip (all checkable on the page)
+## Numbers in the masthead spec line (all checkable on the page)
 
 - 38 stories; 9 regions; 19 fields (counted from `tools/stories.py`).
 - 14 trading partners (USTR list, #27).
@@ -83,8 +84,9 @@ stated as flat fact without a status.
   (Gaza overnight strikes: 8 per Daily Summary vs 9 in one social reel),
   the more detailed digest figure (8) was used and the disagreement is
   recorded here.
-- Map pins for the crowded Gaza/Cairo and Washington/New York clusters are
-  nudged a few degrees so the numbered dots do not overlap; story numbers
-  are unchanged.
+- Map pins for the crowded Cairo/Kyiv, New Jersey/New York/Cartagena and
+  Nairobi clusters are nudged a few degrees so the numbered dots do not
+  overlap; story numbers are unchanged. In v4 the pins are exactly the
+  13 scene numbers.
 - Casualty figures are those reported on 26 Nov; later reporting may
   revise them.
