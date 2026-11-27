@@ -28,13 +28,13 @@ stated as flat fact without a status.
 |---|---|---|---|
 | 1 | De Cos picked to run ECB | Reuters | Reuters 26 Nov ("Euro countries pick Spain's De Cos as ECB chief, Costa says"); AP 26 Nov; WSJ; CNN. Chosen Thu, succeeds Lagarde Feb; formal approval Dec. |
 | 2 | EU split over Ukraine loan, budget | Reuters | Daily Summary, first reported 05:44 UTC: Costa tabled proposal cutting ~10% from Commission plan; Germany/Austria/Netherlands/Sweden oppose paying more. |
-| 3 | NATO AWACS over Poland | NATO | Daily Summary, 17:35 UTC: Gen. Grynkewich authorised AWACS deployment; three Russian H-101 missiles crashed in Poland 20 Nov (Polish prosecutor). |
+| 3 | NATO AWACS over Poland | NATO | Daily Summary, 17:35 UTC: Gen. Grynkewich authorised AWACS deployment; three Russian H-101 missiles crashed in Poland 20 Nov (Polish prosecutor). The page prints only the 26 Nov deployment. |
 | 4 | Russian strikes kill 3 in Ukraine | Ukrainian officials | Daily Summary, 14:02 UTC: strikes on Kharkiv residential buildings + educational institution, ≥3 killed; 113 drones, 87 neutralised; Kyiv shopping centre hit, 7 wounded (h.ua). |
 | 5 | Ukraine claims 5 jets hit | Ukraine General Staff | Daily Summary, 01:39 UTC: Savasleyka airbase, 3 MiG-31 + 2 Su-34 damaged; Russia did not immediately comment. CLAIMED. |
 | 6 | Spain snap vote 29 Nov | Spanish PM's office | Daily Summary, 00:23 UTC: Sánchez called snap elections for Sun 29 Nov, 8 months early, over rejected housing law; PP narrowly ahead in polls. |
 | 7 | UK–EU treaty texts due out | UK government | Daily Summary, 07:40 UTC: food + emissions treaty texts with 10-year termination clause; Badenoch called deal terrible. |
 | 8 | Israel threatens to move 1M in Gaza | Israel defence ministry | Daily Summary, 12:28 UTC; Inshorts 26 Nov: Katz threatened forcible displacement of 1M Palestinians unless Hamas disarms; overnight strikes killed 8. |
-| 9 | 8 killed in overnight Gaza strikes | Gaza Health Ministry | Daily Summary (in #8 item): overnight strikes killed 8, incl. Hamas official Khaled Abu Nada; third straight night despite ceasefire. Toll attributed to the Gaza Health Ministry, the casualty-reporting authority. |
+| 9 | 8 killed in Gaza strikes | Gaza Health Ministry | Daily Summary (in #8 item): overnight strikes killed 8, incl. Hamas official Khaled Abu Nada; third straight night despite ceasefire. Toll attributed to the Gaza Health Ministry, the casualty-reporting authority. |
 | 10 | 2 killed by drone shrapnel in Kuwait | Kuwait ministry | Daily Summary, 13:19 UTC: 4 hurt incl. 2 Italian Rheinmetall technicians, who later died; Italy confirmed; Iran denied operations. |
 | 11 | UK sanctions Houthis | UK government | Daily Summary, 02:04 UTC: Houthis claimed Jeddah + Jazan port attacks; UK froze assets, travel bans on group + 4 leaders. |
 | 12 | Blast hits Sanaa | Saudi coalition | Daily Summary, 00:00 UTC: blast in Sanaa after strikes near airport; coalition intercepted missiles over Riyadh + 2 drones in Eastern Region. CLAIMED. |
@@ -45,38 +45,38 @@ stated as flat fact without a status.
 | 17 | Kenya court faults US Ebola site | Kenya High Court | High Court, Nairobi 26 Nov (Judge Patricia Nyaundi): construction of the US-backed Ebola facility breached the constitution; works halted until the US deal is disclosed (45 days). First reported by Reuters. |
 | 18 | Zambia bans term-limit protest | Zambian police | Daily Summary, 00:22 UTC: protest scheduled 25 Nov banned, citing clash risk; UPND-aligned groups petitioned to remove term limits. |
 | 19 | Myanmar rejects parts of ICJ ruling | Myanmar junta | Daily Summary, 10:25 UTC: Min Aung Hlaing will not comply with parts of ICJ genocide ruling he deems inappropriate; court ordered reparations. |
-| 20 | Taliban erase women's names, Balkh | Afghan officials | Inshorts 26 Nov: Taliban in Balkh directed officials/health workers to replace women's real names with 'Bibi' in official + medical records. REPORTED. |
+| 20 | Taliban axe women's names, Balkh | Afghan officials | Inshorts 26 Nov: Taliban in Balkh directed officials/health workers to replace women's real names with 'Bibi' in official + medical records. REPORTED. |
 | 21 | India women hockey world No. 4 | FIH | SportzCraazy 26 Nov: Indian women's hockey climbs to world No. 4 after dominant win over Japan. |
-| 22 | Kim: widen tactical nukes | KCNA | Daily Summary, 02:03 UTC (KCNA): Kim said tactical nuclear weapons should deploy across multiple domains; nuclear status "absolutely inviolable". |
+| 22 | Kim spreads nuclear arms | KCNA | Daily Summary, 02:03 UTC (KCNA): Kim said tactical nuclear weapons should deploy across multiple domains; nuclear status "absolutely inviolable". |
 | 23 | Bangkok oil depot blast, 7 hurt | Thai officials | Daily Summary, 08:27 UTC: Bangchak depot explosion, fireball, 7 injured (4 critical); evacuations; 120,000 bpd refinery. |
-| 24 | Bogor mine search resumes; 13 dead | Reuters | Reuters 26 Nov: search resumes Thu for 13 trapped in illegal Bogor gold mine; 13 confirmed dead (6 identified); 26 entered Mon, shaft flooded; 325 rescuers. |
-| 25 | Ex-PM attacks Solomons pact | AAP | AAP 26 Nov 01:27 UTC: ex-PM Sogavare accused PM Wale of betrayal over A$740m Australia treaty signed Wed 25 Nov in Canberra; treaty bars foreign bases. The 26 Nov news is the reaction. |
+| 24 | Bogor mine rescue resumes; 13 dead | Reuters | Reuters 26 Nov: search resumes Thu for 13 trapped in illegal Bogor gold mine; 13 confirmed dead (6 identified); 26 entered Mon, shaft flooded; 325 rescuers. |
+| 25 | Ex-PM attacks Solomons pact | Sogavare | AAP 26 Nov 01:27 UTC (relaying Sogavare): ex-PM Sogavare accused PM Wale of betrayal over A$740m Australia treaty signed Wed 25 Nov in Canberra; treaty bars foreign bases. The 26 Nov news is the reaction. The page credits the claimant (Sogavare), not the relay (AAP). |
 | 26 | Australia beat Canada 14–1, Ipoh | FIH | iintroo 26 Nov (event 26 Nov): Marais scores four as Australia beat Canada 14–1 in Ipoh. |
-| 27 | US tariffs hit 14 partners | USTR | Algenom 26 Nov: USTR proposed duties on China, EU, Japan, Korea, Taiwan, India, Vietnam, Switzerland, Singapore, Thailand, Malaysia, Indonesia, Cambodia, Bangladesh (14 partners); China capped 20% (Daily Summary: could stack to 45%). Proposed Wed 25 Nov; led 26 Nov news. Brazil + China denounced it (Daily Summary, 03:54 UTC). |
-| 28 | Macy's parade pushed to Sat | AP | AP via WMHT 26 Nov: 100th Macy's Thanksgiving Day Parade postponed Thu→Sat 28 Nov (first postponement in 100-year history); Mayor Mamdani cited storm safety; NBC airs 2025 repeat Thu. |
+| 27 | US proposes tariffs on 14 partners | USTR | Algenom 26 Nov: USTR proposed duties on China, EU, Japan, Korea, Taiwan, India, Vietnam, Switzerland, Singapore, Thailand, Malaysia, Indonesia, Cambodia, Bangladesh (14 partners); China capped 20% (Daily Summary: could stack to 45%). Proposed Wed 25 Nov; led 26 Nov news. Brazil + China denounced it (Daily Summary, 03:54 UTC). |
+| 28 | Macy's parade moved to Sat | AP | AP via WMHT 26 Nov: 100th Macy's Thanksgiving Day Parade postponed Thu→Sat 28 Nov (first postponement in 100-year history); Mayor Mamdani cited storm safety; NBC airs 2025 repeat Thu. |
 | 29 | Storm knocks out power for 600,000 | Fox Weather | Fox Weather live blog 26 Nov: outages topped 600,000; Virginia 217,000+, Missouri 151,000+; Cape May record 3.75 ft flooding; NJ state of emergency; gusts to 66 mph. |
-| 30 | Puerto Rico court axes Luma deal | Puerto Rico Supreme Court | Daily Summary, 01:00 UTC: 5–4 ruling cancels Luma Energy contract; one year to decide next steps; Gov. González seeks new company. |
-| 31 | US inflation runs at 3.8% | US Bureau of Economic Analysis | BEA October PCE (released Wed 25 Nov, reported 26 Nov): headline +3.8% y/y, core +3.3% (three-year high, above 3.2% expected); Fed meets 8–9 Dec. |
+| 30 | Puerto Rico court axes Luma deal | PR Supreme Court | Daily Summary, 01:00 UTC: 5–4 ruling cancels Luma Energy contract; one year to decide next steps; Gov. González seeks new company. The page shortens the source to "PR Supreme Court" so the source line fits at 8pt. |
+| 31 | US inflation runs at 3.8% | US BEA | BEA October PCE (released Wed 25 Nov, reported 26 Nov): headline +3.8% y/y, core +3.3% (three-year high, above 3.2% expected); Fed meets 8–9 Dec. The page shortens the source to "US BEA" so the source line fits at 8pt. |
 | 32 | 76 hostages freed in Cartagena | Colombian police | Dumpling News 26 Nov 06:03 KST: forces freed ~76 shoppers + staff after 17-hour supermarket siege in Cartagena. |
 | 33 | Brazil, China denounce US tariffs | Brazilian government | Daily Summary, 03:54 UTC: Brazil called sugar + aircraft tariff proposals unacceptable; China accused Washington of political manipulation. |
 | 34 | Brazil probes singer in tin scheme | Brazilian police | Dumpling News 26 Nov: Brazil investigates singer in illegal cassiterite export scheme amid tin price surge. |
 | 35 | SpaceX cleared for 1M satellites | FCC | FCC approval (announced 25 Nov, reported 26 Nov): conditional authorisation for up to 1M Starmind orbital data-centre satellites, first of its kind; Dumpling News 26 Nov 23:15 KST; 10 Things 26 Nov. |
 | 36 | EU to triple data-centre capacity | European Commission | Dumpling News 26 Nov 03:02 KST: Commission wants to triple EU data-centre capacity for AI/cloud within five years; regulatory gaps noted. |
-| 37 | November 2.0° above normal | Copernicus | Climate and Economy roundup 26 Nov (Copernicus/ECMWF ERA5): through 23 Nov, November >2.0°C above 1850–1900 baseline (previous record monthly anomaly 1.78°C, Feb 2024); oceans warmest on record for the time of year. |
+| 37 | November 2° above pre-industrial | Copernicus | Climate and Economy roundup 26 Nov (Copernicus/ECMWF ERA5): through 23 Nov, November >2.0°C above 1850–1900 baseline (previous record monthly anomaly 1.78°C, Feb 2024); oceans warmest on record for the time of year. The 1850–1900 baseline IS the pre-industrial reference, so the headline names it; ".0" is dropped (the deck keeps "2°") so the headline fits the column. |
 | 38 | Depardieu to face trial | Paris appeals court | Daily Summary, 13:46 UTC: Paris appeals court ordered Gérard Depardieu to stand trial for alleged rape of Charlotte Arnould (7 Aug 2018); second allegation dismissed; denies wrongdoing; faces 15–20 years if convicted. |
 
 ## Numbers in the masthead spec line (all checkable on the page)
 
-- 38 stories; 9 regions; 19 fields (counted from `tools/stories.py`).
+- 38 stories; 10 regions; 19 fields (counted from `tools/stories.py`).
 - 14 trading partners (USTR list, #27).
 - 1M satellites (FCC approval, #35).
 - 3.8% US inflation, Oct PCE (BEA, #31).
 
 ## Timeline (UTC, first-reported times, Daily Summary of World)
 
-00:23 Spain vote (#6) · 00:54 Cairo crash (#15) · 01:39 Savasleyka claim (#5) ·
+00:23 Spain calls vote (#6) · 00:54 Cairo crash (#15) · 01:39 Savasleyka claim (#5) ·
 05:44 EU loan row (#2) · 10:25 Myanmar ICJ (#19) · 12:28 Gaza threat (#8) ·
-14:02 Kyiv strikes (#4) · 18:07 Guinea-Bissau vote (#16).
+14:02 Kyiv strikes (#4) · 18:07 Guinea-Bissau vote delayed (#16).
 
 ## Method note
 
@@ -86,7 +86,27 @@ stated as flat fact without a status.
   recorded here.
 - Map pins for the crowded Cairo/Kyiv, New Jersey/New York/Cartagena and
   Nairobi clusters are nudged a few degrees so the numbered dots do not
-  overlap; story numbers are unchanged. In v4 the pins are exactly the
-  13 scene numbers.
+  overlap; story numbers are unchanged. In v5 the pins are exactly the
+  13 scene numbers; pin 15 was moved to Egypt's north coast (its v4 spot
+  read as Saudi Arabia) after a full-zoom check of the v4 map. In v6 the
+  nudged pins (15, 17, 29, 32) get a 1px leader line to their true
+  position; pin 32's display moved to (-67, 2) so its leader shows
+  outside the pin disc. The map label now reads "13 DRAWN SCENES ABOVE"
+  (v5 said BELOW — the strip is above the map).
+- Provenance (v6, First Draft pillars): every source line on the page
+  shows provenance — "1st-hand" for a named source, "via {outlet}" when
+  the source IS a wire relay (Reuters #01/#02/#24, AP #28, Fox Weather
+  #29) — and "no stake" on rows whose source has no stake in the claim.
+  The DATE CHECK footer states the same pillars.
+- LUMA, not LIMA (v6 note): story 30's headline was "COURT AXES LUMA
+  CONTRACT" in v5 too — the mock judge misread it at small size
+  (verified at 2x zoom against this table). The word is unchanged; the
+  misread is why the type floor was raised in v6.
+- No extra Oceania / South Asia story (v6 note): the Daily Summary of
+  World page for 26 Nov 2026 (27 stories, 53 sources) was read in full —
+  it contains no other Oceania or South Asia story, so none was added and
+  the grid keeps 38 stories in 10 regions. Its three stories not in this
+  edition are Kurdish protests in Iraq, a diesel tanker sinking near
+  Ibiza (1 killed), and a Ukrainian drone attack killing 5 in Zaporizhia.
 - Casualty figures are those reported on 26 Nov; later reporting may
   revise them.

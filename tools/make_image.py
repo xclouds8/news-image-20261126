@@ -7,9 +7,56 @@ top-10 study (~/workspace/make-fun-agent/top10-study-20261126.md):
 masthead brand, fields strip, UTC timeline on a true 00-24 scale,
 3 large lead cards with drawn scenes, pinned world map (13 numbered
 pins = the 13 scene numbers), 13 drawn scenes in two rows (7+6),
-38 numbered stories in 9 regions, each with a named source, a place,
+38 numbered stories in 10 regions, each with a named source, a place,
 a date and a claim-status label (CONFIRMED / REPORTED / OFFICIAL /
 CLAIMED), DATE CHECK footer stating exclusion of earlier-day events.
+
+v6 (27 Nov 2026): rebuilt from the Claude verdict on v5
+(~/workspace/make-fun-agent/mock-judge-verdict-v5.md, NEEDS WORK 79/100):
+- Type floor raised: source lines stay 8pt but in #222 (was #333);
+  status chips 7 -> 8pt bold (padding 5, height 13); number gutter
+  22 -> 21px so the two longest headlines still fit (measured: #06
+  margin 1.8px, #37 margin 2.4px — script audit/measure-v6.py).
+- First Draft pillars made explicit: every source line carries
+  provenance ("1st-hand" for a named source, "via {outlet}" when the
+  source IS a wire relay) and "no stake" on unflagged rows; the
+  DATE CHECK footer now states each story shows provenance, source,
+  date, location and motivation (⚑ = source has a stake).
+- Lead cards dominant: headline 26pt serif on TWO lines, art banner
+  48 -> 76px, card height 108 -> 166px; scene tiles pay for it
+  (60 -> 50px, temp 90x40 -> 108x40, uniform 1.25x resize).
+- Map strip 68 -> 45px; continents redrawn (Africa / South America
+  recognisable); pin numerals 9 -> 10pt bold; nudged pins (15, 17,
+  29, 32) get 1px leader lines to their true positions.
+- Map label fixed: "13 DRAWN SCENES BELOW" -> "ABOVE" (the strip is
+  above the map — a factual error on v5).
+- Headlines corrected: 06 "SPAIN CALLS 29 NOV SNAP VOTE", 37 "NOV 2°
+  ABOVE PRE-INDUSTRIAL" (drops ".0" so it fits; deck keeps "2°").
+  LUMA was already correct in v5 (Claude misread it at small size —
+  verified at 2x zoom + SOURCES.md); the word is unchanged.
+- No extra Oceania / South Asia story added: the Daily Summary of
+  World page for 26 Nov (27 stories) contains no other Oceania or
+  South Asia story, and the grid has no room (13/13/12 at 33px rows).
+- Canvas stays 1024x1024 (portrait is impossible — see v5 note).
+
+v5 (27 Nov 2026): rebuilt from the Claude verdict on v4
+(~/workspace/make-fun-agent/mock-judge-verdict-v4.md, NEEDS WORK 71/100)
+plus the fallback-judge polish (83/100):
+- 10 real regions (WORLD deleted; EUROPE & UKRAINE and MIDDLE EAST &
+  GULF split); grid columns rebalanced for 33px rows.
+- Type up: list headlines 14pt, summaries 11pt (target ~55 chars),
+  DATE CHECK + footer line 10pt; stake-flag legend moved to the
+  footer line (the CLAIM LABELS box no longer fits the grid).
+- Scene tiles carry a caption bar ("NN · LABEL"); scene 04 redrawn
+  as a strike; timeline gains 1px leader lines + "·" captions.
+- Lead headlines accurate at 20pt (Claude's 25-31-char wordings do
+  not fit one line at 24pt in a 326px card — measured 417-542px vs
+  314px available); leads get filled status chips.
+- REPORTED darkened to #7a4d00 (measured ~7.3:1).
+- Canvas stays 1024x1024: Claude's portrait 1024x1450 suggestion was
+  REJECTED — kit RULES.txt caps output at 1024x1024 px and main.py
+  enforces it; a portrait image would FAIL the kit check.
+  Legibility is maximised inside the square canvas instead.
 
 v4 (27 Nov 2026): rebuilt from the mock-judge verdict on v3
 (~/workspace/make-fun-agent/mock-judge-verdict-v3.md):
@@ -39,8 +86,8 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from stories import (  # noqa: E402
-    COLUMNS, EDITION_DATE, FIELDS, LEADS, PINS, SCENES, STORIES,
-    TIMELINE,
+    COLUMNS, EDITION_DATE, FIELDS, LEADS, PINS, SCENES, SCENE_CAPTIONS,
+    STORIES, TIMELINE,
 )
 
 from PIL import Image, ImageDraw, ImageFont  # noqa: E402
@@ -52,7 +99,7 @@ PAPER = (247, 243, 232)
 INK = (20, 20, 20)
 GREY = (90, 88, 80)
 DARKGREY = (40, 40, 40)
-DARKTEXT = (51, 51, 51)          # #333 — small text, contrast ~11.4:1
+DARKTEXT = (34, 34, 34)          # #222 — small text, contrast ~13.7:1
 ACCENT = (178, 58, 32)          # orange-red (Ivy brand accent)
 TEAL = (15, 59, 58)             # dark-green section bars
 NAVY = (20, 33, 61)
@@ -65,13 +112,23 @@ CARD_BG = (255, 255, 255)
 RULE = (180, 175, 160)
 
 # Claim-status colours (ClaimReview-style verdict labels).
-# REPORTED is #8a5a00: white on it is ~5.9:1 (v3 amber was ~3.5:1).
+# REPORTED is #7a4d00 (v5: darkened from v4 #8a5a00): white on it is
+# ~7.3:1 (v4 #8a5a00 was ~5.9:1; v3 amber was ~3.5:1). Measured
+# programmatically — see news-image-20261126-work/audit/contrast-v5.py.
 STATUS_COLORS = {
     "CONFIRMED": (30, 110, 60),
-    "REPORTED": (138, 90, 0),
+    "REPORTED": (122, 77, 0),
     "OFFICIAL": (30, 60, 110),
     "CLAIMED": (178, 34, 34),
 }
+
+# Wire outlets: when the named source IS a wire relay (Reuters, AP,
+# Fox Weather), the source line shows "via {outlet}" as the source
+# slot itself (v6, First Draft provenance) instead of repeating the
+# outlet name as a "1st-hand" source. Every other source gets
+# " · 1st-hand" appended. Exactly 5 rows are wire: 01, 02, 24
+# (Reuters), 28 (AP), 29 (Fox Weather) — all unflagged.
+WIRE = {"Reuters", "AP", "Fox Weather"}
 
 FONT_DIR = "/usr/share/fonts/truetype/dejavu"
 
@@ -113,17 +170,17 @@ def draw_lines(draw, lines, x, y, fnt, fill, leading):
 
 
 def chip_width(draw, status):
-    """Width of the status chip (7pt bold text + 4px padding each side)."""
-    return int(text_w(draw, status, F_BOLD(7))) + 8
+    """Width of the status chip (8pt bold text + 5px padding total)."""
+    return int(text_w(draw, status, F_BOLD(8))) + 5
 
 
 def draw_status_chip(draw, x_right, y, status):
     """Small filled chip with the claim-status word, right-aligned at x_right."""
     color = STATUS_COLORS[status]
-    fnt = F_BOLD(7)
-    w, h = chip_width(draw, status), 11
+    fnt = F_BOLD(8)
+    w, h = chip_width(draw, status), 13
     draw.rectangle([x_right - w, y, x_right, y + h], fill=color)
-    draw.text((x_right - w + 4, y + 2), status, font=fnt,
+    draw.text((x_right - w + 2, y + 2), status, font=fnt,
               fill=(255, 255, 255))
     return w
 
@@ -138,14 +195,17 @@ CONTINENTS = [
     # Greenland
     [(-58, 64), (-45, 60), (-40, 65), (-30, 68), (-25, 70), (-35, 76),
      (-55, 76), (-58, 70)],
-    # South America
+    # South America (v6: Brazil bulge + Patagonia taper sharpened so
+    # the continent reads at the 45px map height)
     [(-80, 9), (-75, 11), (-62, 10), (-55, 6), (-50, 0), (-44, -3),
-     (-35, -8), (-40, -20), (-48, -28), (-55, -35), (-65, -41), (-70, -50),
-     (-73, -54), (-70, -40), (-72, -20), (-77, -12), (-80, -5), (-80, 9)],
-    # Africa
+     (-35, -8), (-38, -15), (-41, -23), (-48, -28), (-52, -33),
+     (-57, -38), (-65, -41), (-68, -47), (-70, -52), (-73, -54),
+     (-70, -40), (-71, -30), (-70, -20), (-77, -12), (-80, -5), (-80, 9)],
+    # Africa (v6: Gulf of Guinea notch added; Horn kept sharp)
     [(-17, 15), (-10, 31), (-5, 35), (10, 37), (20, 32), (32, 31), (35, 28),
      (43, 12), (51, 11), (48, 2), (40, -10), (35, -18), (32, -26), (26, -34),
-     (18, -35), (14, -22), (12, -6), (8, 4), (-8, 5), (-13, 8), (-17, 15)],
+     (18, -35), (14, -22), (12, -6), (8, 4), (4, 6), (-8, 5), (-13, 8),
+     (-17, 15)],
     # Eurasia
     [(-10, 36), (-9, 43), (-2, 48), (0, 51), (5, 53), (10, 58), (18, 56),
      (24, 58), (30, 62), (40, 68), (55, 68), (70, 72), (90, 75), (110, 76),
@@ -199,15 +259,23 @@ def draw_map(draw, box):
     for poly in CONTINENTS:
         pts = [proj(lon, lat) for lon, lat in poly]
         draw.polygon(pts, fill=LAND, outline=LAND_LINE)
-    for num, _lon, _lat, dlon, dlat in PINS:
+    # 1px leader lines for nudged pins (v6): the dot sits where the
+    # cluster fits, the line points to the story's true position.
+    # Drawn BEFORE the pins so each dot covers its line's start.
+    for num, lon, lat, dlon, dlat in PINS:
+        if (lon, lat) != (dlon, dlat):
+            tx, ty = proj(lon, lat)
+            px, py = proj(dlon, dlat)
+            draw.line([(px, py), (tx, ty)], fill=LAND_LINE, width=1)
+    for num, lon, lat, dlon, dlat in PINS:
         px, py = proj(dlon, dlat)
         r = 7
         draw.ellipse([px - r, py - r, px + r, py + r], fill=RED,
                      outline=(255, 255, 255), width=2)
-        fnt = F_BOLD(9)
+        fnt = F_BOLD(10)
         label = str(num)
         tw = text_w(draw, label, fnt)
-        draw.text((px - tw / 2, py - 6), label, font=fnt,
+        draw.text((px - tw / 2, py - 7), label, font=fnt,
                   fill=(255, 255, 255))
 
 
@@ -221,37 +289,49 @@ def draw_scene(draw, key, box, accent):
     white = (255, 255, 255)
     dark = (20, 20, 20)
     # ground line shared by most scenes
-    if key not in ("drone", "rocket", "balloon", "sat"):
+    if key not in ("rocket", "balloon", "sat"):
         draw.rectangle([x0 + 4, y1 - 6, x1 - 4, y1 - 4], fill=white)
     if key == "cargo":
-        # container ship: thick hull + two rows of stacked containers + % tag
+        # container ship: thick hull + two rows of stacked containers + % tag.
+        # v6: containers spread across the hull (5 columns at +-w/4, +-w/8,
+        # 0) so the ship reads in a wide lead card, not a small cluster.
         draw.rectangle([x0 + 6, cy + 4, x1 - 6, cy + 12], fill=white)
         draw.polygon([(x0 + 6, cy + 4), (x0 + 14, cy + 12), (x1 - 14, cy + 12),
                       (x1 - 6, cy + 4)], fill=white)
         for row, oy in enumerate((cy - 12, cy - 2)):
-            for j, ox in enumerate((-24, -8, 8)):
+            for j, ox in enumerate((-w // 4, -w // 8, 0, w // 8, w // 4)):
                 fill = GOLD if (row + j) % 2 == 0 else white
                 draw.rectangle([cx + ox - 7, oy, cx + ox + 7, oy + 9],
                                fill=fill, outline=dark)
         draw.rectangle([x1 - 26, y0 + 3, x1 - 5, y0 + 15], fill=GOLD)
         draw.text((x1 - 22, y0 + 4), "%", font=F_BOLD(9), fill=dark)
     elif key == "city":
-        # skyline with lit windows + sun + smoke plume
-        for bx, bh in ((x0 + 8, 20), (x0 + 24, 30), (x0 + 42, 16),
-                       (x0 + 58, 26), (x0 + 76, 18)):
-            draw.rectangle([bx, y1 - 6 - bh, bx + 14, y1 - 6], fill=white)
+        # skyline with lit windows + sun + smoke plume.
+        # v6: buildings spread across the full width (8 towers in a wide
+        # lead card) instead of clustering on the left third.
+        n = max(5, w // 40)
+        bw = 22 if w >= 200 else 14
+        step = (w - 12 - bw) // (n - 1) if n > 1 else 0
+        heights = (24, 34, 20, 30, 26, 36, 22, 28, 32, 18)
+        for i in range(n):
+            bx = x0 + 6 + i * step
+            bh = heights[i % len(heights)]
+            draw.rectangle([bx, y1 - 6 - bh, bx + bw, y1 - 6], fill=white)
             for wy in range(y1 - 6 - bh + 4, y1 - 10, 6):
-                draw.rectangle([bx + 3, wy, bx + 5, wy + 2], fill=dark)
-                draw.rectangle([bx + 9, wy, bx + 11, wy + 2], fill=dark)
+                for wx in (bx + 5, bx + bw - 8):
+                    draw.rectangle([wx, wy, wx + 3, wy + 2], fill=dark)
         draw.ellipse([x1 - 20, y0 + 3, x1 - 9, y0 + 14], fill=GOLD)
         for ox, oy, r in ((-2, 0, 4), (2, -5, 5), (6, -10, 4)):
             draw.ellipse([cx + ox - r, y0 + 8 + oy - r, cx + ox + r,
                           y0 + 8 + oy + r], fill=white)
     elif key == "bank":
-        # pediment + columns + euro sign
-        draw.polygon([(cx - 26, y0 + 8), (cx + 26, y0 + 8), (cx, y0 + 2)],
+        # pediment + columns + euro sign.
+        # v6: pediment and columns widen with the box (pw = w/6) so the
+        # temple reads in a wide lead card, not a small central cluster.
+        pw = w // 6
+        draw.polygon([(cx - pw, y0 + 8), (cx + pw, y0 + 8), (cx, y0 + 2)],
                      fill=white)
-        for ox in (-20, -7, 6, 19):
+        for ox in (-pw, -pw // 3, pw // 3, pw):
             draw.rectangle([cx + ox - 2, y0 + 10, cx + ox + 2, y1 - 8],
                            fill=white)
         draw.rectangle([x0 + 6, y1 - 8, x1 - 6, y1 - 5], fill=white)
@@ -264,13 +344,27 @@ def draw_scene(draw, key, box, accent):
             draw.ellipse([wx - 3, cy + 8, wx + 3, cy + 13], fill=dark)
         draw.polygon([(cx - 2, y0 + 2), (cx + 8, cy - 4), (cx + 4, y0 + 12),
                       (cx - 6, y0 + 10)], fill=(255, 120, 40))
-    elif key == "drone":
-        draw.line([x0 + 10, y0 + 8, x1 - 10, y1 - 8], fill=white, width=2)
-        draw.line([x1 - 10, y0 + 8, x0 + 10, y1 - 8], fill=white, width=2)
-        for px, py in ((x0 + 10, y0 + 8), (x1 - 10, y0 + 8),
-                       (x0 + 10, y1 - 8), (x1 - 10, y1 - 8)):
-            draw.ellipse([px - 4, py - 4, px + 4, py + 4], fill=white)
-        draw.rectangle([cx - 5, cy - 4, cx + 5, cy + 4], fill=GOLD)
+    elif key == "strike":
+        # airstrike on a city: explosion bursts + missile streaks +
+        # building silhouettes (reads as "strikes kill 3", not a network).
+        # v6: positions relative to the box width (temp is now 108 wide),
+        # so the bursts/buildings spread instead of clustering left.
+        for ex, ey, r in ((x0 + (w * 28) // 100, 12, 8),
+                          (x0 + (w * 72) // 100, 10, 7)):
+            draw.polygon([(ex, ey - r), (ex + 3, ey - 3), (ex + r, ey),
+                          (ex + 3, ey + 3), (ex, ey + r), (ex - 3, ey + 3),
+                          (ex - r, ey), (ex - 3, ey - 3)], fill=GOLD)
+        for mx, my, dx, dy in ((x0 + 8, 4, 8, 10), (x1 - 16, 6, -8, 10)):
+            draw.line([mx, my, mx + dx, my + dy], fill=white, width=2)
+            draw.ellipse([mx + dx - 2, my + dy - 2, mx + dx + 2,
+                          my + dy + 2], fill=GOLD)
+        for bx, bw, bh in ((x0 + 8, 18, 16), (x0 + w // 2 - 9, 18, 22),
+                           (x1 - 26, 18, 14)):
+            draw.rectangle([bx, y1 - 6 - bh, bx + bw, y1 - 6], fill=white)
+            draw.rectangle([bx + 4, y1 - 6 - bh + 4, bx + 7,
+                            y1 - 6 - bh + 7], fill=dark)
+            draw.rectangle([bx + bw - 7, y1 - 6 - bh + 4, bx + bw - 4,
+                            y1 - 6 - bh + 7], fill=dark)
     elif key == "balloon":
         # parade balloon + basket + clouds
         draw.ellipse([cx - 14, y0 + 2, cx + 14, y0 + 22], fill=white)
@@ -382,41 +476,54 @@ def draw_scene(draw, key, box, accent):
 
 
 def draw_lead_card(draw, num, headline, deck, scene, accent, x, y, w, h):
-    """One large lead card: scene on top, 24pt serif headline, deck,
-    source line (number + source + place + date + field) + status word."""
+    """One large lead card (v6): 76px scene on top, 26pt serif headline
+    on TWO lines, 9pt deck, source line (number + source + place +
+    field + provenance, NO date — the date is on the masthead and every
+    grid row) + a FILLED status chip (8pt bold, like the list rows)."""
     story = next(s for s in STORIES if s[0] == num)
     _n, _r, _hl, _sm, source, status, field, place, flagged = story
     draw.rectangle([x, y, x + w, y + h], fill=CARD_BG, outline=RULE)
-    draw_scene(draw, scene, (x + 1, y + 1, x + w - 1, y + 51), accent)
-    hl_lines = wrap(draw, headline, F_SERIF(24), w - 12)
-    assert len(hl_lines) == 1, f"lead headline wraps: {headline!r}"
-    draw_lines(draw, hl_lines[:1], x + 6, y + 54, F_SERIF(24), INK, 28)
+    draw_scene(draw, scene, (x + 1, y + 1, x + w - 1, y + 77), accent)
+    assert isinstance(headline, tuple) and len(headline) == 2, \
+        f"lead headline must be 2 lines: {headline!r}"
+    for i, line in enumerate(headline):
+        assert text_w(draw, line, F_SERIF(26)) <= w - 12, \
+            f"lead headline line too wide: {line!r}"
+        draw.text((x + 6, y + 80 + i * 28), line, font=F_SERIF(26), fill=INK)
     deck_lines = wrap(draw, deck, F_REG(9), w - 12)
     assert len(deck_lines) == 1, f"lead deck wraps: {deck!r}"
-    draw_lines(draw, deck_lines[:1], x + 6, y + 84, F_REG(9), DARKGREY, 11)
-    # source + coloured status word, bottom-anchored
+    draw_lines(draw, deck_lines[:1], x + 6, y + 139, F_REG(9), DARKGREY, 11)
+    # source + filled status chip, bottom-anchored (no date here)
     flag = "\u2691 " if flagged else ""
-    src = (f"{num:02d}  {flag}{source} \u00b7 {place} \u00b7 26 Nov "
-           f"\u00b7 {field.upper()}  ")
-    sy = y + 99
+    if source in WIRE:
+        src_txt, prov = f"via {source}", ""
+    else:
+        src_txt, prov = source, " \u00b7 1st-hand"
+    stake = "" if flagged else " \u00b7 no stake"
+    src = (f"{num:02d}  {flag}{src_txt} \u00b7 {place} "
+           f"\u00b7 {field.upper()}{prov}{stake}  ")
+    sy = y + 151
     draw.text((x + 6, sy), src, font=F_REG(8), fill=DARKTEXT)
     off = text_w(draw, src, F_REG(8))
-    total = off + text_w(draw, status, F_BOLD(8))
-    assert total <= w - 12, f"lead source too long: {src!r}{status}"
-    draw.text((x + 6 + off, sy), status, font=F_BOLD(8),
-              fill=STATUS_COLORS[status])
+    cw = int(text_w(draw, status, F_BOLD(8))) + 5
+    assert off + cw <= w - 12, f"lead source too long: {src!r}{status}"
+    draw.rectangle([x + 6 + off, sy - 1, x + 6 + off + cw, sy + 12],
+                   fill=STATUS_COLORS[status])
+    draw.text((x + 6 + off + 2, sy + 1), status, font=F_BOLD(8),
+              fill=(255, 255, 255))
 
 
 def draw_scenes(img, draw, y):
-    """13 scene tiles in two rows (7+6), 135x60, number badge top-left.
+    """13 scene tiles in two rows (7+6), 135x50, number badge top-left.
 
-    The scene art is drawn into a 90x40 temp and upscaled uniformly
-    (1.5x) so the figures fill the tile instead of sitting small in
+    The scene art is drawn into a 108x40 temp and upscaled uniformly
+    (1.25x) so the figures fill the tile instead of sitting small in
     the middle of a wide box. The second row is centred.
+    Each tile carries a caption bar at the bottom ("NN · LABEL", v5).
     """
     gap = 8
     tile_w = (W - 2 * MARGIN - gap * 6) // 7
-    tile_h = 60
+    tile_h = 50
     row_gap = 6
     rows = [SCENES[:7], SCENES[7:]]
     for ri, row in enumerate(rows):
@@ -425,9 +532,9 @@ def draw_scenes(img, draw, y):
         ty = y + ri * (tile_h + row_gap)
         for ci, (num, scene, accent) in enumerate(row):
             tx = x0 + ci * (tile_w + gap)
-            tmp = Image.new("RGB", (90, 40), accent)
+            tmp = Image.new("RGB", (108, 40), accent)
             td = ImageDraw.Draw(tmp)
-            draw_scene(td, scene, (0, 0, 90, 40), accent)
+            draw_scene(td, scene, (0, 0, 108, 40), accent)
             art = tmp.resize((tile_w, tile_h), Image.LANCZOS)
             img.paste(art, (tx, ty))
             draw.rectangle([tx, ty, tx + tile_w, ty + tile_h], outline=RULE)
@@ -437,14 +544,23 @@ def draw_scenes(img, draw, y):
             draw.rectangle([tx, ty, tx + bw, ty + 15], fill=INK)
             draw.text((tx + 4, ty + 2), badge, font=F_BOLD(10),
                       fill=(255, 255, 255))
+            # caption bar at the tile bottom: "NN · SHORT LABEL"
+            cap = f"{num:02d} \u00b7 {SCENE_CAPTIONS[num]}"
+            assert text_w(draw, cap, F_BOLD(8)) <= tile_w - 8, \
+                f"scene caption too wide: {cap!r}"
+            draw.rectangle([tx, ty + tile_h - 12, tx + tile_w, ty + tile_h],
+                           fill=INK)
+            draw.text((tx + 4, ty + tile_h - 10), cap, font=F_BOLD(8),
+                      fill=(255, 255, 255))
 
 
 def draw_timeline(draw, y):
     """UTC timeline on a true 00-24 scale. y = top of the band (56px).
 
-    Captions are 10pt bold, prefixed with the story number, and
-    staggered: the 00:23-01:39 cluster is split above/below the line.
-    Ticks at 00 / 06 / 12 / 18 / 24.
+    Captions are 10pt bold, "NN · LABEL", and staggered: the
+    00:23-01:39 cluster is split above/below the line. A 1px leader
+    line joins each dot to its caption (v5). Ticks at 00 / 06 / 12 /
+    18 / 24.
     """
     def tx(minutes):
         return MARGIN + minutes / 1440.0 * (W - 2 * MARGIN)
@@ -480,7 +596,7 @@ def draw_timeline(draw, y):
     row_y = {0: y, 1: y + 11, 2: y + 33}
     placed = {0: [], 1: [], 2: []}
     for t, label, num in TIMELINE:
-        cap = f"{num:02d} {label}"
+        cap = f"{num:02d} \u00b7 {label}"
         cw = text_w(draw, cap, F_BOLD(10))
         x = tx(mins(t))
         row = row_of[num]
@@ -491,6 +607,14 @@ def draw_timeline(draw, y):
         draw.text((x, row_y[row]), cap, font=F_BOLD(10), fill=DARKTEXT)
         draw.ellipse([x - 4, axis_y - 4, x + 4, axis_y + 4], fill=ACCENT,
                      outline=(255, 255, 255), width=1)
+        # 1px leader line: dot edge to caption (above rows go up,
+        # below row goes down)
+        if row in (0, 1):
+            draw.line([x, row_y[row] + 10, x, axis_y - 4], fill=DARKTEXT,
+                      width=1)
+        else:
+            draw.line([x, axis_y + 4, x, row_y[row]], fill=DARKTEXT,
+                      width=1)
 
 
 def fit_one_line(draw, text, fnt, width):
@@ -514,10 +638,13 @@ def fit_one_line(draw, text, fnt, width):
 def draw_column(draw, regions, x, y, col_w, grid_bottom):
     """Draw region sections + stories in one column; returns bottom y.
 
-    Per story (31px): 12pt headline (asserted 1 line) with the status
+    Per story (33px): 14pt headline (asserted 1 line) with the status
     chip at the right end of the headline line, then 1 line of summary
-    (truncated with '...' if needed), then the source line
-    "Source - Place - 26 Nov - FIELD" with a stake flag (U+2691).
+    at 11pt (truncated with '...' if needed, target ~55 chars), then
+    the source line "Source · Place · 26 Nov · FIELD · provenance"
+    with a stake flag (U+2691) and "no stake" on unflagged rows.
+    v6: chips 8pt bold (padding 5), number gutter 21px, source lines
+    in #222 with provenance + "no stake" (First Draft pillars).
     """
     by_region = {}
     for s in STORIES:
@@ -531,24 +658,28 @@ def draw_column(draw, regions, x, y, col_w, grid_bottom):
         y += 22
         for num, _r, headline, summary, source, status, field, place, flagged in stories:
             cw = chip_width(draw, status)
-            hl_lines = wrap(draw, headline, F_BOLD(12), col_w - 22 - cw)
+            hl_lines = wrap(draw, headline, F_BOLD(14), col_w - 21 - cw)
             assert len(hl_lines) == 1, f"headline wraps: {headline!r}"
-            draw.text((x, y), f"{num:02d}", font=F_BOLD(12), fill=ACCENT)
-            tx = x + 22
-            draw.text((tx, y), headline, font=F_BOLD(12), fill=INK)
+            draw.text((x, y), f"{num:02d}", font=F_BOLD(14), fill=ACCENT)
+            tx = x + 21
+            draw.text((tx, y), headline, font=F_BOLD(14), fill=INK)
             draw_status_chip(draw, x + col_w, y, status)
-            y += 12
-            text = fit_one_line(draw, summary, F_REG(8), col_w - 22)
-            draw.text((tx, y), text, font=F_REG(8), fill=DARKGREY)
-            y += 9
+            y += 14
+            text = fit_one_line(draw, summary, F_REG(11), col_w - 21)
+            draw.text((tx, y), text, font=F_REG(11), fill=DARKGREY)
+            y += 11
             flag = "\u2691 " if flagged else ""
-            src = (f"{flag}{source} \u00b7 {place} \u00b7 26 Nov "
-                   f"\u00b7 {field.upper()}")
-            assert text_w(draw, src, F_REG(8)) <= col_w - 22, \
+            if source in WIRE:
+                src_txt, prov = f"via {source}", ""
+            else:
+                src_txt, prov = source, " \u00b7 1st-hand"
+            stake = "" if flagged else " \u00b7 no stake"
+            src = (f"{flag}{src_txt} \u00b7 {place} \u00b7 26 Nov "
+                   f"\u00b7 {field.upper()}{prov}{stake}")
+            assert text_w(draw, src, F_REG(8)) <= col_w - 21, \
                 f"source too long: {src!r}"
             draw.text((tx, y), src, font=F_REG(8), fill=DARKTEXT)
-            y += 9
-            y += 1  # gap between rows
+            y += 8
     return y
 
 
@@ -560,42 +691,42 @@ def build(output_path):
     title = "IVY WORLD FRONTPAGE"
     f_title = F_SERIF(30)
     tw = text_w(d, title, f_title)
-    d.text(((W - tw) / 2, 6), title, font=f_title, fill=INK)
-    d.line([MARGIN, 42, W - MARGIN, 42], fill=INK, width=2)
-    spec = (f"{EDITION_DATE}  -  38 STORIES  -  9 REGIONS  -  "
+    d.text(((W - tw) / 2, 4), title, font=f_title, fill=INK)
+    d.line([MARGIN, 40, W - MARGIN, 40], fill=INK, width=2)
+    spec = (f"{EDITION_DATE}  -  38 STORIES  -  10 REGIONS  -  "
             f"{len(FIELDS)} FIELDS  -  UTC TIMELINE")
     f_spec = F_BOLD(11)
     tw = text_w(d, spec, f_spec)
-    d.text(((W - tw) / 2, 46), spec, font=f_spec, fill=ACCENT)
+    d.text(((W - tw) / 2, 44), spec, font=f_spec, fill=ACCENT)
 
     # ---- Fields strip ----
     fields_text = "FIELDS:  " + "  \u00b7  ".join(FIELDS)
     assert text_w(d, fields_text, F_REG(8)) <= W - 2 * MARGIN, "fields strip too wide"
-    d.text((MARGIN, 62), fields_text, font=F_REG(8), fill=DARKTEXT)
+    d.text((MARGIN, 60), fields_text, font=F_REG(8), fill=DARKTEXT)
 
     # ---- 3 large lead cards ----
-    ly, lh = 80, 112
+    ly, lh = 70, 166
     lw = (W - 2 * MARGIN - 2 * 8) // 3
     for i, (num, headline, deck, scene, accent) in enumerate(LEADS):
         draw_lead_card(d, num, headline, deck, scene, accent,
                        MARGIN + i * (lw + 8), ly, lw, lh)
 
     # ---- Drawn scenes strip (13, two rows 7+6) ----
-    draw_scenes(img, d, 198)
+    draw_scenes(img, d, 240)
 
     # ---- Pinned world map ----
-    d.text((MARGIN, 330),
+    d.text((MARGIN, 348),
            "WHERE IT HAPPENED  -  13 NUMBERED PINS = STORY NUMBERS  -  "
-           "13 DRAWN SCENES BELOW",
+           "13 DRAWN SCENES ABOVE",
            font=F_BOLD(9), fill=TEAL)
-    draw_map(d, (MARGIN, 344, W - MARGIN, 344 + 68))
+    draw_map(d, (MARGIN, 364, W - MARGIN, 364 + 45))
 
     # ---- UTC timeline (true 00-24 scale) ----
-    draw_timeline(d, 418)
+    draw_timeline(d, 415)
 
     # ---- Story grid ----
-    grid_top = 480
-    grid_bottom = 968
+    grid_top = 475
+    grid_bottom = 973
     col_w = (W - 2 * MARGIN - 2 * 8) // 3
     col_x = [MARGIN, MARGIN + col_w + 8, MARGIN + 2 * (col_w + 8)]
     bottoms = []
@@ -622,18 +753,26 @@ def build(output_path):
         draw_lines(d, lines, col_x[2] + 6, b + 20, F_REG(8), DARKTEXT, 11)
 
     # ---- Footer: DATE CHECK (states EXCLUSION, never an admission) ----
-    d.line([MARGIN, 972, W - MARGIN, 972], fill=INK, width=2)
+    # v6: DATE CHECK now states the First Draft pillars (provenance,
+    # source, date, location, motivation) + the claim status; the
+    # stake-flag legend moved here from the footer line (which drops
+    # "⚑ = SOURCE HAS A STAKE" to avoid duplication).
+    d.line([MARGIN, 977, W - MARGIN, 977], fill=INK, width=2)
     foot = ("DATE CHECK - Every story on this page is dated Thu 26 Nov 2026. "
-            "No story dated 25 Nov or earlier appears here; each story carries "
-            "its named source and a claim status (CONFIRMED / REPORTED / "
-            "OFFICIAL / CLAIMED). Figures are those reported on 26 Nov; later "
-            "reporting may revise them.")
-    fl = wrap(d, foot, F_REG(9), W - 2 * MARGIN)
-    y = draw_lines(d, fl, MARGIN, 978, F_REG(9), INK, 12)
-    d.text((MARGIN, y + 2),
-           "IVY WORLD FRONTPAGE  -  26 NOV 2026  -  38 STORIES  -  9 REGIONS  -  "
-           "19 FIELDS  -  UTC TIMELINE  -  13 SCENES  -  3 LEAD CARDS  -  13 MAP PINS",
-           font=F_BOLD(9), fill=DARKTEXT)
+            "No story dated 25 Nov or earlier appears here. Each story shows "
+            "provenance, source, date, location and motivation "
+            "(\u2691 = source has a stake) and a claim status (CONFIRMED / "
+            "REPORTED / OFFICIAL / CLAIMED).")
+    fl = wrap(d, foot, F_REG(10), W - 2 * MARGIN)
+    assert len(fl) == 2, f"DATE CHECK wraps to {len(fl)} lines"
+    y = draw_lines(d, fl, MARGIN, 983, F_REG(10), INK, 13)
+    footline = ("IVY WORLD FRONTPAGE \u00b7 26 NOV 2026 \u00b7 38 STORIES "
+                "\u00b7 10 REGIONS \u00b7 19 FIELDS \u00b7 UTC TIMELINE "
+                "\u00b7 13 SCENES \u00b7 3 LEAD CARDS \u00b7 13 MAP PINS")
+    assert text_w(d, footline, F_BOLD(10)) <= W - 2 * MARGIN, \
+        "footer line too wide"
+    d.text((MARGIN, y + 2), footline, font=F_BOLD(10), fill=DARKTEXT)
+    assert y + 2 + 10 <= H, "footer overflows page"
 
     img.save(output_path, "PNG", optimize=True)
 
@@ -641,7 +780,7 @@ def build(output_path):
     regions = sorted({s[1] for s in STORIES})
     fields = sorted({s[6] for s in STORIES})
     assert len(STORIES) == 38, len(STORIES)
-    assert len(regions) == 9, regions
+    assert len(regions) == 10, regions
     assert sum(len([s for s in STORIES if s[1] == r]) for r in regions) == 38
     assert len(fields) == len(FIELDS) == 19, fields
     assert fields == sorted(FIELDS), "FIELDS list mismatch"

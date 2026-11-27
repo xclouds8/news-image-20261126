@@ -10,52 +10,59 @@ world news in one image". [See the bounty page](https://make.fun/bounty/news-ima
 - Account: [@xcloudss](https://make.fun/u/xcloudss)
 - Reward: $100 USDC total, 50 paid places, $20 for 1st place
 - Entries close: 28 Nov 2026, 07:00 WIB (2026-11-28T00:00:00Z)
-- Entry image: `world-news-26-nov-2026.png` (1024×1024 PNG, 273,653 bytes)
+- Entry image: `world-news-26-nov-2026.png` (1024×1024 PNG, 283,665 bytes,
+  SHA-256 `3e51722489c49ab8ce42d4b9fd84855833e2ae68d4037448b0f1f8c30fb215d0`)
 - Entrypoint: `main.py` — run `python3 main.py` (standard library only);
   it copies the image to `/output/entry.png` (falls back to `./output/`).
 
 ## The front page
 
-One newspaper front page, **38 numbered stories in 9 regions and 19 fields**,
+One newspaper front page, **38 numbered stories in 10 regions and 19 fields**,
 every story with a named source, a place, a date **and** a claim status (CONFIRMED / REPORTED /
 OFFICIAL / CLAIMED), a UTC timeline on a true 00–24 scale, 13 drawn scenes in two rows (7+6),
-3 large lead cards, a pinned world map whose 13 numbered pins are exactly the 13 scene numbers, and a DATE CHECK
-footer that states the exclusion of earlier-day events.
+3 large lead cards with two-line 26pt headlines, a pinned world map whose 13 numbered pins are exactly the 13 scene numbers, and a DATE CHECK
+footer that states the exclusion of earlier-day events. Every source line
+carries provenance ("1st-hand" for a named source, "via {outlet}" for a wire
+relay) and "no stake" where the source has no stake in the claim; the DATE
+CHECK states that each story shows provenance, source, date, location and
+motivation.
 
 **Lead:** the US proposes tariffs on 14 trading partners (China capped at 20%).
 
-**Europe & Ukraine (7):** De Cos picked to run the ECB; EU split over the
-Ukraine loan; NATO watches Poland by air; Russian strikes kill 3 in Ukraine;
-Ukraine claims 5 jets hit; Spain to vote early on 29 Nov; UK–EU treaty
-texts due out.
+**Europe (7):** De Cos picked to run the ECB; EU split over the
+Ukraine loan; Spain calls a 29 Nov snap vote; UK–EU treaty
+texts due out; EU to triple data capacity; November 2° above
+pre-industrial; Depardieu to face trial.
 
-**Middle East & Gulf (7):** Israel threatens 1M in Gaza; 8 killed in Gaza
-strikes; 2 killed by drone shrapnel in Kuwait; UK sanctions the Houthis;
-blast hits Sanaa; ISIL attack kills 2 in Hasakah; Iraq jails 8 French IS
+**Ukraine & Russia (3):** NATO watches Poland by air; Russian strikes
+kill 3 in Ukraine; Ukraine claims 5 jets hit.
+
+**Middle East (4):** Israel threatens 1M in Gaza; 8 killed in Gaza
+strikes; ISIL attack kills 2 in Hasakah; Iraq jails 8 French IS
 members.
+
+**Gulf (3):** 2 killed by drone shrapnel in Kuwait; UK sanctions the
+Houthis; blast hits Sanaa.
 
 **Africa (4):** 31 killed as a tanker burns in Cairo; Guinea-Bissau vote
 delayed; Kenya court faults the US Ebola site; Zambia bans a term-limit
 protest.
 
-**South Asia (2):** Taliban erase women's names in Balkh; India women
+**South Asia (2):** Taliban axe women's names in Balkh; India women
 hockey No. 4.
 
-**East & Southeast Asia (5):** Myanmar rejects the ICJ ruling; Kim: widen
-nuclear deployment; Bangkok depot blast injures 7; Bogor mine search
+**East & Southeast Asia (5):** Myanmar rejects the ICJ ruling; Kim
+spreads nuclear arms; Bangkok depot blast injures 7; Bogor mine rescue
 resumes; Australia hit Canada 14–1 in Ipoh, Malaysia.
 
 **Oceania (1):** ex-PM attacks the Solomons pact.
 
-**North America (5):** US tariffs hit 14 partners; parade pushed to
+**North America (6):** US proposes tariffs on 14; parade moved to
 Saturday; storm cuts power for 600,000; court axes the Luma contract; US
-inflation runs at 3.8%.
+inflation runs at 3.8%; SpaceX cleared for 1M satellites.
 
 **South America (3):** 76 hostages freed in Cartagena; Brazil, China denounce
 tariffs; Brazil probes a singer.
-
-**World (4):** SpaceX cleared for 1M satellites; EU to triple data capacity;
-November 2.0° above normal; Depardieu to face trial.
 
 ## How the image was made
 
@@ -83,7 +90,8 @@ they are printed as 26 Nov reports, as a Thursday newspaper prints them,
 and are flagged in `SOURCES.md`. Casualty figures are those reported that
 day, and later reporting may revise them. Map pins for the crowded
 Cairo/Kyiv, New Jersey/New York/Cartagena and Nairobi clusters are nudged a
-few degrees so the numbered dots do not overlap; the story numbers are
+few degrees so the numbered dots do not overlap, with a short leader line
+joining each nudged dot to its true position; the story numbers are
 unchanged.
 
 ## Licence
